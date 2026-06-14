@@ -5,7 +5,7 @@ import VideoBackground from "./components/VideoBackground";
 import Landing from "./screens/Landing";
 import Conversation from "./screens/Conversation";
 import Translation from "./screens/Translation";
-import { clearToken, getToken } from "./lib/api";
+import { clearToken } from "./lib/api";
 import { initStore } from "./lib/store";
 
 type View = "home" | "conversation" | "translation";
