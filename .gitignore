@@ -1,0 +1,24 @@
+# Python / backend
+backend/.venv/
+__pycache__/
+*.pyc
+backend/.env
+*.db
+*.db-*
+*.db.*-bak
+.uv/
+
+# Node / frontend
+frontend/node_modules/
+frontend/dist/
+frontend/.vite/
+frontend/*.tsbuildinfo
+frontend/tsconfig*.tsbuildinfo
+frontend/vite.config.js
+frontend/vite.config.d.ts
+
+# Editor / OS
+.DS_Store
+.idea/
+.vscode/
+*.log

@@ -1,0 +1,7 @@
+YOUR_DOMAIN {
+    # Proxy everything to the FastAPI app (which also serves the built frontend).
+    reverse_proxy 127.0.0.1:8000
+
+    # Caddy auto-provisions a Let's Encrypt TLS cert for YOUR_DOMAIN.
+    # Make sure port 80 and 443 are open in Oracle Cloud VCN Security List.
+}

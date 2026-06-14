@@ -1,0 +1,5 @@
+# Ensure consistent line endings
+* text=auto
+*.sh text eol=lf
+deploy/Caddyfile text eol=lf
+deploy/sprachheld.service text eol=lf

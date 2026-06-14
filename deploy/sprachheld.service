@@ -1,0 +1,17 @@
+[Unit]
+Description=Sprachheld German Tracker
+After=network.target
+
+[Service]
+Type=simple
+User=YOUR_USERNAME
+WorkingDirectory=/opt/sprachheld/backend
+# uv run picks up the .venv created by uv sync
+ExecStart=/home/YOUR_USERNAME/.cargo/bin/uv run uvicorn app.main:app --host 127.0.0.1 --port 8000
+Restart=always
+RestartSec=5
+# Load the .env file
+EnvironmentFile=/opt/sprachheld/backend/.env
+
+[Install]
+WantedBy=multi-user.target
