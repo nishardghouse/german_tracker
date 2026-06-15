@@ -3,12 +3,13 @@ import { useCallback, useEffect, useState } from "react";
 import TokenGate from "./components/TokenGate";
 import VideoBackground from "./components/VideoBackground";
 import Landing from "./screens/Landing";
+import Cards from "./screens/Cards";
 import Conversation from "./screens/Conversation";
 import Translation from "./screens/Translation";
 import { clearToken } from "./lib/api";
 import { initStore } from "./lib/store";
 
-type View = "home" | "conversation" | "translation";
+type View = "home" | "conversation" | "translation" | "cards";
 
 export default function App() {
   const [view, setView] = useState<View>("home");
@@ -65,6 +66,9 @@ export default function App() {
           <NavLink active={view === "translation"} onClick={() => setView("translation")}>
             TRANSLATE
           </NavLink>
+          <NavLink active={view === "cards"} onClick={() => setView("cards")}>
+            CARDS
+          </NavLink>
         </nav>
 
         <div className="w-[150px] hidden sm:block" />
@@ -86,6 +90,8 @@ export default function App() {
           </CenterMessage>
         ) : view === "conversation" ? (
           <Conversation />
+        ) : view === "cards" ? (
+          <Cards />
         ) : (
           <Translation />
         ))}

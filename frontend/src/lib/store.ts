@@ -271,6 +271,25 @@ export function recordAttempt(input: {
   updated.forEach((p) => persist(api.putErrorPattern(p)));
 }
 
+export function archiveCard(id: string): void {
+  const card = cache.cards.find((c) => c.id === id);
+  if (!card) return;
+  card.archived = true;
+  persist(api.updateCard(card));
+}
+
+export function editCard(
+  id: string,
+  fields: { prompt_en?: string; target_de?: string | null; context_note?: string },
+): void {
+  const card = cache.cards.find((c) => c.id === id);
+  if (!card) return;
+  if (fields.prompt_en !== undefined) card.prompt_en = fields.prompt_en;
+  if ("target_de" in fields) card.target_de = fields.target_de ?? null;
+  if ("context_note" in fields) card.context_note = fields.context_note;
+  persist(api.updateCard(card));
+}
+
 /** Aggregate conversation errors into patterns without touching FSRS scheduling. */
 export function recordErrors(errors: ErrorInstance[]): void {
   if (errors.length === 0) return;
