@@ -1,5 +1,6 @@
 import { useMemo, useState } from "react";
-import { Pencil, Trash2 } from "lucide-react";
+import { Pencil, Sparkles, Trash2 } from "lucide-react";
+import { translateSentence } from "../lib/api";
 import { archiveCard, editCard, getCards, type Card } from "../lib/store";
 
 const SOURCE_LABEL: Record<string, string> = {
@@ -124,6 +125,20 @@ function EditModal({
   const [en, setEn] = useState(card.prompt_en);
   const [de, setDe] = useState(card.target_de ?? "");
   const [note, setNote] = useState(card.context_note ?? "");
+  const [generating, setGenerating] = useState(false);
+
+  const generate = async () => {
+    if (!en.trim() || generating) return;
+    setGenerating(true);
+    try {
+      const { translation } = await translateSentence(en.trim());
+      setDe(translation);
+    } catch {
+      // silent fail — user can still type manually
+    } finally {
+      setGenerating(false);
+    }
+  };
 
   const save = () => {
     if (!en.trim()) return;
@@ -154,8 +169,18 @@ function EditModal({
             className="bg-white/5 rounded-xl px-3 py-2 text-[15px] text-white outline-none placeholder:text-white/30 focus:bg-white/10"
           />
         </label>
-        <label className="flex flex-col gap-1">
-          <span className="text-[12px] text-white/55">German reference</span>
+        <div className="flex flex-col gap-1">
+          <div className="flex items-center justify-between">
+            <span className="text-[12px] text-white/55">German reference</span>
+            <button
+              onClick={generate}
+              disabled={generating || !en.trim()}
+              className="flex items-center gap-1 text-[11px] text-white/45 hover:text-white disabled:opacity-30 transition-colors"
+            >
+              <Sparkles size={11} />
+              {generating ? "Generating…" : "Generate"}
+            </button>
+          </div>
           <input
             value={de}
             onChange={(e) => setDe(e.target.value)}
@@ -163,7 +188,7 @@ function EditModal({
             placeholder="Optional"
             className="bg-white/5 rounded-xl px-3 py-2 text-[15px] text-white outline-none placeholder:text-white/30 focus:bg-white/10"
           />
-        </label>
+        </div>
         <label className="flex flex-col gap-1">
           <span className="text-[12px] text-white/55">Context note</span>
           <input

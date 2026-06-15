@@ -126,6 +126,14 @@ class TranscribeResult(BaseModel):
     confidence: float | None = None
 
 
+class TranslateRequest(BaseModel):
+    text: str
+
+
+class TranslateResponse(BaseModel):
+    translation: str
+
+
 # ── Persistence models (wire shapes match the frontend store) ─────────────────
 
 

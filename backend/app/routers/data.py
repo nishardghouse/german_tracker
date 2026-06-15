@@ -1,7 +1,8 @@
 from fastapi import APIRouter
 
 from .. import repository
-from ..schemas import AttemptModel, CardModel, ErrorPatternModel, StateResponse
+from ..llm import translate_en_to_de
+from ..schemas import AttemptModel, CardModel, ErrorPatternModel, StateResponse, TranslateRequest, TranslateResponse
 
 router = APIRouter(tags=["data"])
 
@@ -38,3 +39,8 @@ def create_attempt(attempt: AttemptModel) -> None:
 def upsert_error_pattern(category: str, pattern: ErrorPatternModel) -> None:
     pattern.category = category
     repository.upsert_error_pattern(pattern)
+
+
+@router.post("/translate", response_model=TranslateResponse)
+def translate(body: TranslateRequest) -> TranslateResponse:
+    return TranslateResponse(translation=translate_en_to_de(body.text))

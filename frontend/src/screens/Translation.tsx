@@ -3,10 +3,11 @@ import { Eye, Plus, RotateCcw, Send, Volume2 } from "lucide-react";
 
 import ErrorList from "../components/ErrorList";
 import MicButton from "../components/MicButton";
-import { gradeTranslation } from "../lib/api";
+import { gradeTranslation, translateSentence } from "../lib/api";
 import { speakGerman, useDictation } from "../lib/speech";
 import {
   addManualCard,
+  editCard,
   getDueCard,
   getStats,
   getTopErrorPatterns,
@@ -391,10 +392,16 @@ function AddSentence({
 
   const submit = () => {
     if (!en.trim()) return;
-    addManualCard({ prompt_en: en, target_de: de || null });
+    const card = addManualCard({ prompt_en: en, target_de: de || null });
+    const needsTranslation = !de.trim();
     setEn("");
     setDe("");
     onAdded();
+    if (needsTranslation) {
+      translateSentence(card.prompt_en)
+        .then(({ translation }) => editCard(card.id, { target_de: translation }))
+        .catch(() => {});
+    }
   };
 
   const overlay = useMemo(

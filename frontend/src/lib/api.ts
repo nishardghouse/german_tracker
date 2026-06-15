@@ -134,3 +134,7 @@ export function createAttempt(attempt: Attempt): Promise<void> {
 export function putErrorPattern(pattern: ErrorPattern): Promise<void> {
   return send(`/error-patterns/${encodeURIComponent(pattern.category)}`, "PUT", pattern);
 }
+
+export function translateSentence(text: string): Promise<{ translation: string }> {
+  return postJSON("/translate", { text });
+}
