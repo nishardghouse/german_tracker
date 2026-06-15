@@ -11,7 +11,7 @@ git pull
 
 echo "=== Updating Python deps ==="
 cd "$APP_DIR/backend"
-~/.cargo/bin/uv sync
+~/.local/bin/uv sync
 
 echo "=== Rebuilding frontend ==="
 cd "$APP_DIR/frontend"
