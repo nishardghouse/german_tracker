@@ -27,7 +27,7 @@ app.add_middleware(
 @app.middleware("http")
 async def auth_middleware(request: Request, call_next):
     token = settings.app_token
-    if token and request.url.path not in ("/api/health", "/health"):
+    if token and request.url.path.startswith("/api/") and request.url.path != "/api/health":
         auth = request.headers.get("Authorization", "")
         if auth != f"Bearer {token}":
             return JSONResponse(
