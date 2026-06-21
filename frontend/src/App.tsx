@@ -119,7 +119,7 @@ function NavLink({
   return (
     <button
       onClick={onClick}
-      className={`text-[11px] font-medium tracking-[0.12em] px-4 py-1.5 rounded-full transition-colors duration-200 ${
+      className={`text-[10px] sm:text-[11px] font-medium tracking-[0.06em] sm:tracking-[0.12em] px-2.5 sm:px-4 py-1.5 rounded-full transition-colors duration-200 ${
         active ? "bg-white text-black" : "text-white/90 hover:text-white"
       }`}
     >
